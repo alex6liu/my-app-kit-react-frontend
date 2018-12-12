@@ -15,6 +15,7 @@ class Bookstore extends Component {
       have: '',
       read: '',
       tags: '',
+      searchText: '',
     };
   }
 
@@ -136,16 +137,16 @@ class Bookstore extends Component {
         <h1>This is my bookstore</h1>
         <div className="bookstore_main-container">
           <Table dataSource={books}>
-            <Column title="Id" dataIndex="_id" key=""/> 
-            <Column title="Name" dataIndex="name" key=""/> 
-            <Column title="Author" dataIndex="author" key=""/> 
-            <Column title="Have" dataIndex="have" key="" render={read => (
+            <Column title="Id" dataIndex="_id" key="id"/> 
+            <Column title="Name" dataIndex="name" key="name"/> 
+            <Column title="Author" dataIndex="author" key="author"/> 
+            <Column title="Have" dataIndex="have" key="have" render={read => (
               read ? 'Yes' : 'No'
             )}/> 
-            <Column title="Read" dataIndex="read" key="" render={read => (
+            <Column title="Read" dataIndex="read" key="read" render={read => (
               read ? 'Yes' : 'No'
             )}/> 
-            <Column title="Tags" dataIndex="tags" key="" render={tags => (
+            <Column title="Tags" dataIndex="tags" key="tags" render={tags => (
               <span>
                 {tags.map(tag => <Tag color="blue" key={tag}>{tag}</Tag>)}
               </span>
