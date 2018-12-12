@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Table, Divider, Tag, Button, Input } from 'antd';
 
 import Header from '../Header';
 import './index.scss';
@@ -11,9 +12,9 @@ class Bookstore extends Component {
       books: [],
       name: '',
       author: '',
-      have: false,
-      read: false,
-      tags: [],
+      have: '',
+      read: '',
+      tags: '',
     };
   }
 
@@ -36,8 +37,10 @@ class Bookstore extends Component {
       }),
     })
     .then(() => fetch(bookstoreUrl)
-    .then(res => res.json())
-    .then(myjson => this.setState({books: myjson})))
+      .then(res => res.json())
+      .then(myjson => this.setState({
+        books: myjson
+      })))
   }
 
   handleRead(id, read) {
@@ -52,7 +55,9 @@ class Bookstore extends Component {
     })
     .then(() => fetch(bookstoreUrl)
       .then(res => res.json())
-      .then(myjson => this.setState({books: myjson})))
+      .then(myjson => this.setState({
+        books: myjson
+      })))
   }
 
   handleDelete(id) {
@@ -63,8 +68,10 @@ class Bookstore extends Component {
       },
     })
     .then(() => fetch(bookstoreUrl)
-    .then(res => res.json())
-    .then(myjson => this.setState({books: myjson})))
+      .then(res => res.json())
+      .then(myjson => this.setState({
+        books: myjson
+      })))
   }
 
   handleSubmit(name, author, have, read, tags) {
@@ -82,8 +89,16 @@ class Bookstore extends Component {
       }),
     })
     .then(() => fetch(bookstoreUrl)
-    .then(res => res.json())
-    .then(myjson => this.setState({books: myjson})))
+      .then(res => res.json())
+      .then(myjson => this.setState({
+        books: myjson,
+        name: '',
+        author: '',
+        have: '',
+        read: '',
+        tags: '',
+      })))
+    
   }
 
   handelChangeName(e) {
@@ -112,78 +127,59 @@ class Bookstore extends Component {
     })
   }
 
-  createTable(books) {
-    const items =[];
-    for (let i = 0; i < books.length; i++) {
-        items.push(
-            <tr>
-                <td>
-                  {books[i]._id}
-                </td>
-                <td>
-                  {books[i].name}
-                </td>
-                <td>
-                  {books[i].author}
-                </td>
-                <td>{books[i].have ? 'Yes' : 'No'}</td>
-                <td>{books[i].read ? 'Yes' : 'No'}</td>
-                <td>{books[i].tags}</td>
-                <td>
-                  <div>
-                    <input type="checkbox" id="have" name="have" onClick={() => this.handleHave(books[i]._id, books[i].have)} checked={books[i].have ? true : false} />
-                    <label for="have">Have</label>
-                  </div>
-                </td>
-                <td>
-                  <div>
-                    <input type="checkbox" id="read" name="read" onClick={() => this.handleRead(books[i]._id, books[i].read)} checked={books[i].read ? true : false} />
-                    <label for="read">Read</label>
-                  </div>
-                </td>
-                <td>
-                  <button onClick={() => this.handleDelete(books[i]._id)}>Delete</button>
-                </td>
-            </tr>
-        );
-    }
-    return items;
-  }
-
   render() {
-    const { books } = this.state;
-
+    const { books, name, author, have, read, tags } = this.state;
+    const { Column } = Table;
     return (
       <React.Fragment>
         <Header/>
         <h1>This is my bookstore</h1>
         <div className="bookstore_main-container">
-          <table border="1" cellPadding="0" cellSpacing="0">
-            <tbody>
-              <tr>
-                <td>Id</td>
-                <td>Name</td>
-                <td>Author</td>
-                <td>Have</td>
-                <td>Read</td>
-                <td>Tags</td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              {this.createTable(books)}
-            </tbody>
-          </table>
-          <br />
-          <br />
+          <Table dataSource={books}>
+            <Column title="Id" dataIndex="_id" key=""/> 
+            <Column title="Name" dataIndex="name" key=""/> 
+            <Column title="Author" dataIndex="author" key=""/> 
+            <Column title="Have" dataIndex="have" key="" render={read => (
+              read ? 'Yes' : 'No'
+            )}/> 
+            <Column title="Read" dataIndex="read" key="" render={read => (
+              read ? 'Yes' : 'No'
+            )}/> 
+            <Column title="Tags" dataIndex="tags" key="" render={tags => (
+              <span>
+                {tags.map(tag => <Tag color="blue" key={tag}>{tag}</Tag>)}
+              </span>
+            )}/> 
+            <Column
+              title="Action"
+              key="action"
+              render={(text, record) => (
+                <React.Fragment>
+                  <Button type="primary" onClick={() => this.handleHave(record._id)}>
+                    Have
+                  </Button>
+                  <Divider type="vertical" />
+                  <Button type="primary" onClick={() => this.handleRead(record._id)}>
+                    Read
+                  </Button>
+                  <Divider type="vertical" />
+                  <Button type="primary" onClick={() => this.handleDelete(record._id)}>
+                    Delete
+                  </Button>
+                </React.Fragment>
+              )}
+            />
+
+          </Table>
+
           <div className="add-new-book">
-          <h2>Add new book</h2>
-            <input type="text" placeholder="book name" onChange={this.handelChangeName.bind(this)}/>
-            <input type="text" placeholder="author" onChange={this.handelChangeAuthor.bind(this)}/>
-            <input type="text" placeholder="have" onChange={this.handelChangeHave.bind(this)}/>
-            <input type="text" placeholder="read" onChange={this.handelChangeRead.bind(this)}/>
-            <textarea onChange={this.handelChangeTags.bind(this)}></textarea>
-            <button onClick={() => this.handleSubmit(this.state.name, this.state.author, this.state.have, this.state.read, this.state.tags)}>Submit</button>
+            <h2>Add new book</h2>
+            <Input type="text" placeholder="book name" onChange={this.handelChangeName.bind(this)} value={name}/>
+            <Input type="text" placeholder="author" onChange={this.handelChangeAuthor.bind(this)} value={author}/>
+            <Input type="text" placeholder="have" onChange={this.handelChangeHave.bind(this)} value={have}/>
+            <Input type="text" placeholder="read" onChange={this.handelChangeRead.bind(this)} value={read}/>
+            <Input.TextArea onChange={this.handelChangeTags.bind(this)} value={tags}/>
+            <Button type="primary" onClick={() => this.handleSubmit(name, author, have, read, tags)}>Submit</Button>
           </div>
         </div>
       </React.Fragment>
