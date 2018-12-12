@@ -9,6 +9,11 @@ class Bookstore extends Component {
     super();
     this.state = {
       books: [],
+      name: '',
+      author: '',
+      have: false,
+      read: false,
+      tags: [],
     };
   }
 
@@ -17,6 +22,8 @@ class Bookstore extends Component {
       .then(res => res.json())
       .then(myjson => this.setState({books: myjson}))
   }
+
+  componentDidUpdate() {}
 
   handleHave(id, have) {
     fetch(bookstoreUrl+`/${id}`, {
@@ -28,6 +35,9 @@ class Bookstore extends Component {
         "have": !have,
       }),
     })
+    .then(() => fetch(bookstoreUrl)
+    .then(res => res.json())
+    .then(myjson => this.setState({books: myjson})))
   }
 
   handleRead(id, read) {
@@ -40,11 +50,69 @@ class Bookstore extends Component {
         "read": !read,
       }),
     })
+    .then(() => fetch(bookstoreUrl)
+      .then(res => res.json())
+      .then(myjson => this.setState({books: myjson})))
   }
 
-  render() {
-    const { books } = this.state;
+  handleDelete(id) {
+    fetch(bookstoreUrl+`/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then(() => fetch(bookstoreUrl)
+    .then(res => res.json())
+    .then(myjson => this.setState({books: myjson})))
+  }
 
+  handleSubmit(name, author, have, read, tags) {
+    fetch(bookstoreUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name:name,
+        author:author,
+        have:have,
+        read:read,
+        tags:tags
+      }),
+    })
+    .then(() => fetch(bookstoreUrl)
+    .then(res => res.json())
+    .then(myjson => this.setState({books: myjson})))
+  }
+
+  handelChangeName(e) {
+    this.setState({
+      name: e.target.value
+    })
+  }
+  handelChangeAuthor(e) {
+    this.setState({
+      author: e.target.value
+    })
+  }
+  handelChangeHave(e) {
+    this.setState({
+      have: e.target.value
+    })
+  }
+  handelChangeRead(e) {
+    this.setState({
+      read: e.target.value
+    })
+  }
+  handelChangeTags(e) {
+    this.setState({
+      tags: e.target.value
+    })
+  }
+
+  createTable(books) {
     const items =[];
     for (let i = 0; i < books.length; i++) {
         items.push(
@@ -62,17 +130,28 @@ class Bookstore extends Component {
                 <td>{books[i].read ? 'Yes' : 'No'}</td>
                 <td>{books[i].tags}</td>
                 <td>
-                  <button onClick={() => this.handleHave(books[i]._id, books[i].have)}>Have</button>
+                  <div>
+                    <input type="checkbox" id="have" name="have" onClick={() => this.handleHave(books[i]._id, books[i].have)} checked={books[i].have ? true : false} />
+                    <label for="have">Have</label>
+                  </div>
                 </td>
                 <td>
-                  <button onClick={() => this.handleRead(books[i]._id, books[i].read)}>Read</button>
+                  <div>
+                    <input type="checkbox" id="read" name="read" onClick={() => this.handleRead(books[i]._id, books[i].read)} checked={books[i].read ? true : false} />
+                    <label for="read">Read</label>
+                  </div>
                 </td>
                 <td>
-                  <button>Delete</button>
+                  <button onClick={() => this.handleDelete(books[i]._id)}>Delete</button>
                 </td>
             </tr>
         );
     }
+    return items;
+  }
+
+  render() {
+    const { books } = this.state;
 
     return (
       <React.Fragment>
@@ -92,9 +171,20 @@ class Bookstore extends Component {
                 <td></td>
                 <td></td>
               </tr>
-              {items}
+              {this.createTable(books)}
             </tbody>
           </table>
+          <br />
+          <br />
+          <div className="add-new-book">
+          <h2>Add new book</h2>
+            <input type="text" placeholder="book name" onChange={this.handelChangeName.bind(this)}/>
+            <input type="text" placeholder="author" onChange={this.handelChangeAuthor.bind(this)}/>
+            <input type="text" placeholder="have" onChange={this.handelChangeHave.bind(this)}/>
+            <input type="text" placeholder="read" onChange={this.handelChangeRead.bind(this)}/>
+            <textarea onChange={this.handelChangeTags.bind(this)}></textarea>
+            <button onClick={() => this.handleSubmit(this.state.name, this.state.author, this.state.have, this.state.read, this.state.tags)}>Submit</button>
+          </div>
         </div>
       </React.Fragment>
     );

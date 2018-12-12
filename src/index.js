@@ -12,7 +12,7 @@ import Todolist from './Components/Todolist';
 import Bookstore from './Components/Bookstore';
 import Shoppingcart from './Components/Shoppingcart';
 import * as serviceWorker from './serviceWorker';
-
+import 'antd/dist/antd.css';
 ReactDOM.render(
   <Router>
     <Switch>
