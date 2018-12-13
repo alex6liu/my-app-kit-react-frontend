@@ -156,15 +156,15 @@ class Bookstore extends Component {
               key="action"
               render={(text, record) => (
                 <React.Fragment>
-                  <Button type="primary" onClick={() => this.handleHave(record._id)}>
-                    Have
+                  <Button type="primary" onClick={() => this.handleHave(record._id, record.have)}>
+                    {!record.have ? "have" : "Not have"} 
                   </Button>
                   <Divider type="vertical" />
-                  <Button type="primary" onClick={() => this.handleRead(record._id)}>
-                    Read
+                  <Button type="primary" onClick={() => this.handleRead(record._id, record.read)}>
+                    {!record.read ? "read" : "Not read"}
                   </Button>
                   <Divider type="vertical" />
-                  <Button type="primary" onClick={() => this.handleDelete(record._id)}>
+                  <Button type="danger" onClick={() => this.handleDelete(record._id)}>
                     Delete
                   </Button>
                 </React.Fragment>
