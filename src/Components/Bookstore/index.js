@@ -1,191 +1,286 @@
 import React, { Component } from 'react';
-import { Table, Divider, Tag, Button, Input } from 'antd';
+import { Table, Divider, Tag, Button, Input, Checkbox, Icon } from 'antd';
+import { Row, Col } from 'antd';
+import { connect } from 'react-redux';
+
+import { getBooks, handleHaveAction, handleReadAction, handleDeleteAction, addBook } from '../../actions/bookstore/getBooks';
 
 import Header from '../Header';
 import './index.scss';
-import { bookstoreUrl } from '../../apiUrl';
+import BookTags from '../BookTags';
 
 class Bookstore extends Component {
   constructor() {
     super();
     this.state = {
-      books: [],
       name: '',
       author: '',
-      have: '',
-      read: '',
-      tags: '',
+      have: false,
+      read: false,
+      history: false,
+      eco: false,
+      cs: false,
+      novel: false,
+      literature: false,
       searchText: '',
     };
   }
 
   componentDidMount() {
-    fetch(bookstoreUrl)
-      .then(res => res.json())
-      .then(myjson => this.setState({books: myjson}))
+    const { dispatch } = this.props;
+    dispatch(getBooks());
   }
 
   componentDidUpdate() {}
 
   handleHave(id, have) {
-    fetch(bookstoreUrl+`/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        "have": !have,
-      }),
-    })
-    .then(() => fetch(bookstoreUrl)
-      .then(res => res.json())
-      .then(myjson => this.setState({
-        books: myjson
-      })))
+    const { dispatch } = this.props;
+    dispatch(handleHaveAction(id, have));
   }
 
   handleRead(id, read) {
-    fetch(bookstoreUrl+`/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        "read": !read,
-      }),
-    })
-    .then(() => fetch(bookstoreUrl)
-      .then(res => res.json())
-      .then(myjson => this.setState({
-        books: myjson
-      })))
+    const { dispatch } = this.props;
+    dispatch(handleReadAction(id, read));
   }
 
   handleDelete(id) {
-    fetch(bookstoreUrl+`/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-    .then(() => fetch(bookstoreUrl)
-      .then(res => res.json())
-      .then(myjson => this.setState({
-        books: myjson
-      })))
+    const { dispatch } = this.props;
+    dispatch(handleDeleteAction(id));
   }
 
-  handleSubmit(name, author, have, read, tags) {
-    fetch(bookstoreUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name:name,
-        author:author,
-        have:have,
-        read:read,
-        tags:tags
-      }),
-    })
-    .then(() => fetch(bookstoreUrl)
-      .then(res => res.json())
-      .then(myjson => this.setState({
-        books: myjson,
+  handleSubmit(name, author, have, read) {
+    const tags = [];
+    if (this.state.history) {
+      tags.push('历史')
+    }
+    if (this.state.eco) {
+      tags.push('经济')
+    }
+    if (this.state.cs) {
+      tags.push('计算机')
+    }
+    if (this.state.novel) {
+      tags.push('小说')
+    }
+    if (this.state.literature) {
+      tags.push('文学')
+    }
+
+    const { dispatch } = this.props;
+    dispatch(addBook(name, author, have, read, tags));
+
+    this.setState({
         name: '',
         author: '',
-        have: '',
-        read: '',
-        tags: '',
-      })))
-    
+        have: false,
+        read: false,
+        tags: [],
+        history: false,
+        eco: false,
+        cs: false,
+        novel: false,
+        literature: false,
+      })
   }
 
-  handelChangeName(e) {
+  handleChangeName(e) {
     this.setState({
       name: e.target.value
     })
   }
-  handelChangeAuthor(e) {
+  handleChangeAuthor(e) {
     this.setState({
       author: e.target.value
     })
   }
-  handelChangeHave(e) {
+  handleChangeHave(e) {
     this.setState({
-      have: e.target.value
+      have: e.target.checked
     })
   }
-  handelChangeRead(e) {
+  handleChangeRead(e) {
     this.setState({
-      read: e.target.value
+      read: e.target.checked
     })
   }
-  handelChangeTags(e) {
-    this.setState({
-      tags: e.target.value
-    })
+  handleChangeTags(genre, e ) {
+    this.setState({ [genre]: e.target.checked})
+  }
+
+  handleSearch = (selectedKeys, confirm) => () => {
+    confirm();
+    this.setState({ searchText: selectedKeys[0] });
+  }
+
+  handleReset = clearFilters => () => {
+    clearFilters();
+    this.setState({ searchText: '' });
   }
 
   render() {
-    const { books, name, author, have, read, tags } = this.state;
-    const { Column } = Table;
-    return (
-      <React.Fragment>
-        <Header/>
-        <h1>This is my bookstore</h1>
-        <div className="bookstore_main-container">
-          <Table dataSource={books}>
-            <Column title="Id" dataIndex="_id" key="id"/> 
-            <Column title="Name" dataIndex="name" key="name"/> 
-            <Column title="Author" dataIndex="author" key="author"/> 
-            <Column title="Have" dataIndex="have" key="have" render={read => (
-              read ? 'Yes' : 'No'
-            )}/> 
-            <Column title="Read" dataIndex="read" key="read" render={read => (
-              read ? 'Yes' : 'No'
-            )}/> 
-            <Column title="Tags" dataIndex="tags" key="tags" render={tags => (
-              <span>
-                {tags.map(tag => <Tag color="blue" key={tag}>{tag}</Tag>)}
-              </span>
-            )}/> 
-            <Column
-              title="Action"
-              key="action"
-              render={(text, record) => (
-                <React.Fragment>
-                  <Button type="primary" onClick={() => this.handleHave(record._id, record.have)}>
-                    {!record.have ? "have" : "Not have"} 
-                  </Button>
-                  <Divider type="vertical" />
-                  <Button type="primary" onClick={() => this.handleRead(record._id, record.read)}>
-                    {!record.read ? "read" : "Not read"}
-                  </Button>
-                  <Divider type="vertical" />
-                  <Button type="danger" onClick={() => this.handleDelete(record._id)}>
-                    Delete
-                  </Button>
-                </React.Fragment>
-              )}
+    const { name, author, have, read } = this.state;
+    const { history, eco, cs, novel, literature } = this.state
+
+    const { books, haveHad, haveRead } = this.props;
+    console.log(this.props)
+    const columns = [
+      {
+        title: 'Id',
+        dataIndex: '_id',
+        key: 'id',
+      },
+      {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+      },
+      {
+        title: 'Author',
+        dataIndex: 'author',
+        key: 'author',
+        filterDropdown: ({
+          setSelectedKeys, selectedKeys, confirm, clearFilters,
+        }) => (
+          <div className="custom-filter-dropdown">
+            <Input
+              ref={ele => this.searchInput = ele}
+              placeholder="Search name"
+              value={selectedKeys[0]}
+              onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+              onPressEnter={this.handleSearch(selectedKeys, confirm)}
             />
-
-          </Table>
-
-          <div className="add-new-book">
-            <h2>Add new book</h2>
-            <Input type="text" placeholder="book name" onChange={this.handelChangeName.bind(this)} value={name}/>
-            <Input type="text" placeholder="author" onChange={this.handelChangeAuthor.bind(this)} value={author}/>
-            <Input type="text" placeholder="have" onChange={this.handelChangeHave.bind(this)} value={have}/>
-            <Input type="text" placeholder="read" onChange={this.handelChangeRead.bind(this)} value={read}/>
-            <Input.TextArea onChange={this.handelChangeTags.bind(this)} value={tags}/>
-            <Button type="primary" onClick={() => this.handleSubmit(name, author, have, read, tags)}>Submit</Button>
+            <Button type="primary" onClick={this.handleSearch(selectedKeys, confirm)}>Search</Button>
+            <Button onClick={this.handleReset(clearFilters)}>Reset</Button>
           </div>
-        </div>
-      </React.Fragment>
+        ),
+        filterIcon: filtered => <Icon type="search" style={{ color: filtered ? '#108ee9' : '#f50' }} />,
+        onFilter: (value, record) => record.author.toLowerCase().includes(value.toLowerCase()),
+        onFilterDropdownVisibleChange: (visible) => {
+          if (visible) {
+            setTimeout(() => {
+              this.searchInput.focus();
+            });
+          }
+        },
+        render: (text) => {
+          const { searchText } = this.state;
+          return searchText ? (
+            <span>
+              {text.split(new RegExp(`(${searchText})`, 'gi')).map((fragment, i) => (
+                fragment.toLowerCase() === searchText.toLowerCase()
+                  ? <span key={i} className="highlight">{fragment}</span> : fragment // eslint-disable-line
+              ))}
+            </span>
+          ) : text;
+        },
+      },
+      {
+        title: 'Have',
+        dataIndex: 'have',
+        key: 'have',
+        render:(have) => (have ? 'Yes' : 'No'),
+      },
+      {
+        title: 'Read',
+        dataIndex: 'read',
+        key: 'read',
+        render: read => (read ? 'Yes' : 'No'),
+      },
+      {
+        title: 'Tags',
+        dataIndex: 'tags',
+        render: tags => (
+          <span>
+            {tags.map(tag => <Tag color="blue" key={tag}>{tag}</Tag>)}
+          </span>
+        ),
+        filters: [
+          { text: '历史', value: '历史' },
+          { text: '经济', value: '经济' },
+          { text: '计算机', value: '计算机' },
+          { text: '小说', value: '小说' },
+          { text: '文学', value: '文学' },
+        ],
+        onFilter: (value, record) => (record.tags.indexOf(value) !== -1),
+      },
+      {
+        title: 'Action',
+        key: 'action',
+        render: (text, record) => (
+          <React.Fragment>
+            <Button type="primary" onClick={() => this.handleHave(record._id, record.have)}>
+              {!record.have ? "have" : "Not have"} 
+            </Button>
+            <Divider type="vertical" />
+            <Button type="primary" onClick={() => this.handleRead(record._id, record.read)}>
+              {!record.read ? "read" : "Not read"}
+            </Button>
+            <Divider type="vertical" />
+            <Button type="danger" onClick={() => this.handleDelete(record._id)}>
+              Delete
+            </Button>
+          </React.Fragment>
+        ),
+      },
+    ];
+
+    const tableState = {
+      bordered: true,
+    };
+
+    return (
+      <div className="bookstore_main-container">
+        <Header/>
+        <Row>
+          <Col span={16}>
+            <div className="bookstore_table-container">
+              <h1>This is my bookstore</h1>
+              <Table dataSource={books} columns={columns} onChange={this.handleChange} {...tableState}/>
+
+              <div className="add-new-book">
+                <h2>Add new book</h2>
+                <Input type="text" placeholder="book name" onChange={this.handleChangeName.bind(this)} value={name}/>
+                <Input type="text" placeholder="author" onChange={this.handleChangeAuthor.bind(this)} value={author}/>
+                <div className="checkbox-container">
+                  <Checkbox onChange={this.handleChangeHave.bind(this)} checked={have}>Have</Checkbox>
+                  <Checkbox onChange={this.handleChangeRead.bind(this)} checked={read}>Read</Checkbox>
+                </div>
+                <div className="genre-container">
+                  <h3>选择书籍的类别</h3>
+                  <Checkbox onChange={this.handleChangeTags.bind(this, 'history')} checked={history}>历史</Checkbox>
+                  <Checkbox onChange={this.handleChangeTags.bind(this, 'eco')} checked={eco}>经济</Checkbox>
+                  <Checkbox onChange={this.handleChangeTags.bind(this, 'cs')} checked={cs}>计算机</Checkbox>
+                  <Checkbox onChange={this.handleChangeTags.bind(this, 'novel')} checked={novel}>小说</Checkbox>
+                  <Checkbox onChange={this.handleChangeTags.bind(this, 'literature')} checked={literature}>文学</Checkbox>
+                </div>
+
+                <Button type="primary" onClick={() => this.handleSubmit(name, author, have, read)}>Submit</Button>
+              </div>
+            </div>
+          </Col>
+
+          <Col span={8}>
+            <BookTags/>
+            <div className="have-read-count">
+              <h3>This is have and read count</h3>
+              <Tag color="#f50">Have: {haveHad}</Tag>
+              <Tag color="#2db7f5">Read: {haveRead}</Tag>
+            </div>
+          </Col>
+        </Row>
+        
+      </div>
     );
   }
-} 
+}
 
-export default Bookstore;
+const mapStateToProps = state => {
+  console.log(state)
+  return ({
+    books: state.getBooks.books,
+    haveHad: state.haveReadCount.have,
+    haveRead: state.haveReadCount.read,
+  });
+};
+
+export default connect(mapStateToProps)(Bookstore);

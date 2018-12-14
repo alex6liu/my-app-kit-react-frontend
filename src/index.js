@@ -13,14 +13,24 @@ import Bookstore from './Components/Bookstore';
 import Shoppingcart from './Components/Shoppingcart';
 import * as serviceWorker from './serviceWorker';
 import 'antd/dist/antd.css';
+
+const store = createStore(
+  rootReducer,
+  applyMiddleware(
+    thunkMiddleware,
+  ),
+);
+
 ReactDOM.render(
   <Router>
-    <Switch>
-      <Route path="/" exact component={Index} />
-      <Route path="/todolist" exact component={Todolist} />
-      <Route path="/bookstore" exact component={Bookstore} />
-      <Route path="/shoppingcart" exact component={Shoppingcart}/>
-    </Switch>
+    <Provider store={store}>
+      <Switch>
+        <Route path="/" exact component={Index} />
+        <Route path="/todolist" exact component={Todolist} />
+        <Route path="/bookstore" exact component={Bookstore} />
+        <Route path="/shoppingcart" exact component={Shoppingcart}/>
+      </Switch>
+    </Provider>
   </Router>
   , document.getElementById('root'));
 

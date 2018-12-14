@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
+import Header from '../Header';
 
-const Shoppingcart = () => (
-  <h1>H1</h1>
-);
+
+class Shoppingcart extends Component {
+  render () {
+    return (
+      <Header/>
+    );
+  }
+}
 
 export default Shoppingcart;
