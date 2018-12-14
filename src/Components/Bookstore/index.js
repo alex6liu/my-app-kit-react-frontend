@@ -23,10 +23,14 @@ class Bookstore extends Component {
       novel: false,
       literature: false,
       searchText: '',
+      loading: true,
     };
   }
 
   componentDidMount() {
+    setTimeout(() => this.setState({
+      loading: false
+    }),500);
     const { dispatch } = this.props;
     dispatch(getBooks());
   }
@@ -118,7 +122,7 @@ class Bookstore extends Component {
   }
 
   render() {
-    const { name, author, have, read } = this.state;
+    const { name, author, have, read, loading } = this.state;
     const { history, eco, cs, novel, literature } = this.state
 
     const { books, haveHad, haveRead } = this.props;
@@ -226,13 +230,21 @@ class Bookstore extends Component {
 
     const tableState = {
       bordered: true,
+      loading: loading,
+      pagination: {
+        pageSize: 5,
+      },
     };
 
     return (
       <div className="bookstore_main-container">
         <Header/>
         <Row>
-          <Col span={16}>
+          <Col span={6}>
+            <BookTags/>
+          </Col>
+
+          <Col span={12}>
             <div className="bookstore_table-container">
               <h1>This is my bookstore</h1>
               <Table dataSource={books} columns={columns} onChange={this.handleChange} {...tableState}/>
@@ -259,8 +271,7 @@ class Bookstore extends Component {
             </div>
           </Col>
 
-          <Col span={8}>
-            <BookTags/>
+          <Col span={6}>
             <div className="have-read-count">
               <h3>This is have and read count</h3>
               <Tag color="#f50">Have: {haveHad}</Tag>
