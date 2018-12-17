@@ -32,6 +32,19 @@ class Index extends Component {
     const { searchText } = this.state
     const { results }  = this.props;
 
+    const createUl = (data) => {
+      const ul = [];
+      data.map(item => ul.push(
+        <ul>
+          <li>日期：{item.date}</li>
+          <li>天气：{item.cond_txt_d} - {item.cond_txt_n}</li>
+          <li>气温：{item.tmp_min} - {item.tmp_max}</li>
+          <li>湿度：{item.hum}</li>
+        </ul>
+      ));
+      return ul;
+    };
+
     return (
       <React.Fragment>
         <Header />
@@ -52,24 +65,7 @@ class Index extends Component {
                 <h3>{results.HeWeather6[0].basic.location}</h3>
                 <p>更新时间: {results.HeWeather6[0].update.loc}</p>
                 <div>
-                  <ul>
-                    <li>日期：{results.HeWeather6[0].daily_forecast[0].date}</li>
-                    <li>天气：{results.HeWeather6[0].daily_forecast[0].cond_txt_d} - {results.HeWeather6[0].daily_forecast[0].cond_txt_n}</li>
-                    <li>气温：{results.HeWeather6[0].daily_forecast[0].tmp_min} - {results.HeWeather6[0].daily_forecast[0].tmp_max}</li>
-                    <li>湿度：{results.HeWeather6[0].daily_forecast[0].hum}</li>
-                  </ul>
-                  <ul>
-                    <li>{results.HeWeather6[0].daily_forecast[1].date}</li>
-                    <li>{results.HeWeather6[0].daily_forecast[1].cond_txt_d} - {results.HeWeather6[0].daily_forecast[1].cond_txt_n}</li>
-                    <li>{results.HeWeather6[0].daily_forecast[1].tmp_min} - {results.HeWeather6[0].daily_forecast[1].tmp_max}</li>
-                    <li>{results.HeWeather6[0].daily_forecast[1].hum}</li>
-                  </ul>
-                  <ul>
-                    <li>{results.HeWeather6[0].daily_forecast[2].date}</li>
-                    <li>{results.HeWeather6[0].daily_forecast[2].cond_txt_d} - {results.HeWeather6[0].daily_forecast[2].cond_txt_n}</li>
-                    <li>{results.HeWeather6[0].daily_forecast[2].tmp_min} - {results.HeWeather6[0].daily_forecast[2].tmp_max}</li>
-                    <li>{results.HeWeather6[0].daily_forecast[2].hum}</li>
-                  </ul>
+                  {createUl(results.HeWeather6[0].daily_forecast)}
                 </div>
               </div>)
               : null
