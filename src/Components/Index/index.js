@@ -25,7 +25,7 @@ class Index extends Component {
   createDiv(searchText) {
     const { dispatch } = this.props
     dispatch(getTianqi(searchText))
-    
+    this.setState({searchText: ''})
   }
 
   render() {
@@ -56,6 +56,7 @@ class Index extends Component {
               enterButton="Search"
               size="large"
               onChange={this.handleOnChange.bind(this)}
+              value={this.state.searchText}
             />
             <Button type="primary" onClick={() => this.createDiv(searchText)}>Search</Button>
           </div>
