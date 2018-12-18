@@ -237,13 +237,13 @@ class Bookstore extends Component {
         title: 'Have',
         dataIndex: 'have',
         key: 'have',
-        render:(have) => (have ? 'Yes' : 'No'),
+        render:(have) => (<Checkbox checked={have} />),
       },
       {
         title: 'Read',
         dataIndex: 'read',
         key: 'read',
-        render: read => (read ? 'Yes' : 'No'),
+        render: read => (<Checkbox checked={read} />),
       },
       {
         title: 'Tags',
@@ -268,11 +268,11 @@ class Bookstore extends Component {
         render: (text, record) => (
           <React.Fragment>
             <Button type="primary" onClick={() => this.handleHave(record._id, record.have)}>
-              {!record.have ? "have" : "Not have"} 
+              Change Have
             </Button>
             <Divider type="vertical" />
             <Button type="primary" onClick={() => this.handleRead(record._id, record.read)}>
-              {!record.read ? "read" : "Not read"}
+              Change Read
             </Button>
             <Divider type="vertical" />
             <Button type="danger" onClick={() => this.handleDelete(record._id)}>
