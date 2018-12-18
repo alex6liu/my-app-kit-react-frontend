@@ -60,18 +60,20 @@ export const handleDeleteAction = (id) => (dispatch) => (
       .then(() => dispatch(haveReadCount()))
 );
 
-export const addBook = (name, author, have, read, tags) => (dispatch) => (
+export const addBook = (name, author, have, read, normalPrice, buyPrice, tags) => (dispatch) => (
     fetch(bookstoreUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name:name,
-        author:author,
-        have:have,
-        read:read,
-        tags:tags
+        name,
+        author,
+        have,
+        read,
+        normalPrice,
+        buyPrice,
+        tags,
       }),
     })
     .then(() => dispatch(getBooks()))
