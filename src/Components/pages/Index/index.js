@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import Header from '../Header';
+import Header from '../../widgets/Header';
 import { Input, Button } from 'antd';
 import { connect } from 'react-redux';
 
-import { getTianqi } from '../../actions/index/indexAction';
+import { getTianqi } from '../../../actions/index/indexAction';
 import './index.scss';
 
 class Index extends Component {

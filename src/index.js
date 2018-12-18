@@ -7,10 +7,10 @@ import { applyMiddleware, createStore } from 'redux';
 import { Provider } from 'react-redux';
 
 import rootReducer from './reducers/rootReducer';
-import Index from './Components/Index';
-import Todolist from './Components/Todolist';
-import Bookstore from './Components/Bookstore';
-import Shoppingcart from './Components/Shoppingcart';
+import Index from './Components/pages/Index';
+import Todolist from './Components/pages/Todolist';
+import Bookstore from './Components/pages/Bookstore';
+import Shoppingcart from './Components/pages/Shoppingcart';
 import * as serviceWorker from './serviceWorker';
 import 'antd/dist/antd.css';
 

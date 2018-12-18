@@ -3,11 +3,11 @@ import { Table, Divider, Tag, Button, Input, Checkbox, Icon } from 'antd';
 import { Row, Col } from 'antd';
 import { connect } from 'react-redux';
 
-import { getBooks, handleHaveAction, handleReadAction, handleDeleteAction, addBook } from '../../actions/bookstore/getBooks';
+import { getBooks, handleHaveAction, handleReadAction, handleDeleteAction, addBook } from '../../../actions/bookstore/getBooks';
 
-import Header from '../Header';
+import Header from '../../widgets/Header';
 import './index.scss';
-import BookTags from '../BookTags';
+import BookTags from '../../widgets/BookTags';
 
 class Bookstore extends Component {
   constructor() {

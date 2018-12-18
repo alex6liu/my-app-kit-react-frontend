@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Header from '../Header';
+import Header from '../../widgets/Header';
 import './index.scss';
-import { todolistUrl } from '../../apiUrl';
+import { todolistUrl } from '../../../apiUrl';
 import { Table, Divider, Tag, Button, Input, Checkbox, DatePicker } from 'antd';
 import moment from 'moment';
 

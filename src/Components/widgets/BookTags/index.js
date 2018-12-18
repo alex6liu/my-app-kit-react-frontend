@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Tag } from 'antd';
 import { connect } from 'react-redux';
-import { getBookTags } from '../../actions/bookstore/getBookTags';
+import { getBookTags } from '../../../actions/bookstore/getBookTags';
 
 import './index.scss';
 
