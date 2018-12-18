@@ -30,7 +30,7 @@ class Bookstore extends Component {
   componentDidMount() {
     setTimeout(() => this.setState({
       loading: false
-    }),500);
+    }),2000);
     const { dispatch } = this.props;
     dispatch(getBooks());
   }
@@ -129,14 +129,44 @@ class Bookstore extends Component {
     console.log(this.props)
     const columns = [
       {
-        title: 'Id',
-        dataIndex: '_id',
-        key: 'id',
-      },
-      {
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
+        filterDropdown: ({
+          setSelectedKeys, selectedKeys, confirm, clearFilters,
+        }) => (
+          <div className="custom-filter-dropdown">
+            <Input
+              ref={ele => this.searchInput = ele}
+              placeholder="Search name"
+              value={selectedKeys[0]}
+              onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+              onPressEnter={this.handleSearch(selectedKeys, confirm)}
+            />
+            <Button type="primary" onClick={this.handleSearch(selectedKeys, confirm)}>Search</Button>
+            <Button onClick={this.handleReset(clearFilters)}>Reset</Button>
+          </div>
+        ),
+        filterIcon: filtered => <Icon type="search" style={{ color: filtered ? '#108ee9' : '#f50' }} />,
+        onFilter: (value, record) => record.name.toLowerCase().includes(value.toLowerCase()),
+        onFilterDropdownVisibleChange: (visible) => {
+          if (visible) {
+            setTimeout(() => {
+              this.searchInput.focus();
+            });
+          }
+        },
+        render: (text) => {
+          const { searchText } = this.state;
+          return searchText ? (
+            <span>
+              {text.split(new RegExp(`(${searchText})`, 'gi')).map((fragment, i) => (
+                fragment.toLowerCase() === searchText.toLowerCase()
+                  ? <span key={i} className="highlight">{fragment}</span> : fragment // eslint-disable-line
+              ))}
+            </span>
+          ) : text;
+        },
       },
       {
         title: 'Author',
@@ -148,7 +178,7 @@ class Bookstore extends Component {
           <div className="custom-filter-dropdown">
             <Input
               ref={ele => this.searchInput = ele}
-              placeholder="Search name"
+              placeholder="Search author"
               value={selectedKeys[0]}
               onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
               onPressEnter={this.handleSearch(selectedKeys, confirm)}
