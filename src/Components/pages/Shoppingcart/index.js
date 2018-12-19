@@ -14,6 +14,8 @@ class Shoppingcart extends Component {
       currentPrice: null,
       minPrice: null,
       link: '',
+      createTime: null,
+      defaultDate: null,
     };
   }
 
@@ -48,16 +50,25 @@ class Shoppingcart extends Component {
     dispatch(handleDeleteAction(id));
   }
 
-  handleSubmit(name, currentPrice, minPrice, link) {
+  handleSubmit(name, currentPrice, minPrice, link, createTime) {
     const { dispatch } = this.props;
-    dispatch(addShopping(name, currentPrice, minPrice, link));
+    dispatch(addShopping(name, currentPrice, minPrice, link, createTime));
 
     this.setState({
         name: '',
         currentPrice: null,
         minPrice: null,
         link: '',
+        createTime: null,
+        defaultDate: null,
       })
+  }
+
+  handleChangeCreateTime(date, dateString) {
+    this.setState({
+      createTime: dateString,
+      defaultDate: date,
+    })
   }
 
   render () {
@@ -113,7 +124,7 @@ class Shoppingcart extends Component {
     };
 
     const { shoppings } = this.props;
-    const { name, currentPrice, minPrice, link, defaultDate } = this.state;
+    const { name, currentPrice, minPrice, link, defaultDate, createTime } = this.state;
     return (
       <div className="shopping-cart-page-container">
         <Header/>
@@ -125,9 +136,9 @@ class Shoppingcart extends Component {
           <Input type="text" placeholder="current price" onChange={this.handleChangeCurrentPrice.bind(this)} value={currentPrice}/>
           <Input type="text" placeholder="min price" onChange={this.handleChangeMinPrice.bind(this)} value={minPrice}/>
           <Input type="text" placeholder="link" onChange={this.handleChangeLink.bind(this)} value={link}/>
-          {/* <DatePicker placeholder="createTime" onChange={this.handleChangeCreateTime.bind(this)} value={defaultDate}/> */}
+          <DatePicker placeholder="createTime" onChange={this.handleChangeCreateTime.bind(this)} value={defaultDate}/>
 
-          <Button type="primary" onClick={() => this.handleSubmit(name, currentPrice, minPrice, link)}>Submit</Button>
+          <Button type="primary" onClick={() => this.handleSubmit(name, currentPrice, minPrice, link, createTime)}>Submit</Button>
         </div>
       </div>
 
