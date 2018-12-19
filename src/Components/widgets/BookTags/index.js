@@ -16,7 +16,7 @@ class BookTags extends Component {
 
         return (
             <div className="book-tags-container">
-                <h1>This is tags map</h1>
+                <h3>This is tags map</h3>
                 <div className="book-tags">
                     <Tag color="#f50">历史: {history}</Tag>
                     <Tag color="#2db7f5">经济: {eco}</Tag>

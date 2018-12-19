@@ -17,6 +17,8 @@ class Bookstore extends Component {
       author: '',
       have: false,
       read: false,
+      normalPrice: '',
+      buyPrice: '',
       history: false,
       eco: false,
       cs: false,
@@ -52,7 +54,7 @@ class Bookstore extends Component {
     dispatch(handleDeleteAction(id));
   }
 
-  handleSubmit(name, author, have, read) {
+  handleSubmit(name, author, have, read, normalPrice, buyPrice) {
     const tags = [];
     if (this.state.history) {
       tags.push('历史')
@@ -71,13 +73,15 @@ class Bookstore extends Component {
     }
 
     const { dispatch } = this.props;
-    dispatch(addBook(name, author, have, read, tags));
+    dispatch(addBook(name, author, have, read, normalPrice, buyPrice, tags));
 
     this.setState({
         name: '',
         author: '',
         have: false,
         read: false,
+        normalPrice: '',
+        buyPrice: '',
         tags: [],
         history: false,
         eco: false,
@@ -107,6 +111,17 @@ class Bookstore extends Component {
       read: e.target.checked
     })
   }
+  handleChangeNormalPrice(e) {
+    this.setState({
+      normalPrice: e.target.value
+    })
+  }
+  handleChangeBuyPrice(e) {
+    this.setState({
+      buyPrice: e.target.value
+    })
+  }
+
   handleChangeTags(genre, e ) {
     this.setState({ [genre]: e.target.checked})
   }
@@ -122,11 +137,11 @@ class Bookstore extends Component {
   }
 
   render() {
-    const { name, author, have, read, loading } = this.state;
+    const { name, author, have, read, normalPrice, buyPrice, loading } = this.state;
     const { history, eco, cs, novel, literature } = this.state
 
     const { books, haveHad, haveRead } = this.props;
-    console.log(this.props)
+
     const columns = [
       {
         title: 'Name',
@@ -209,16 +224,26 @@ class Bookstore extends Component {
         },
       },
       {
+        title: 'Normal Price',
+        dataIndex: 'normalPrice',
+        key: 'normalPrice',
+      },
+      {
+        title: 'Buy Price',
+        dataIndex: 'buyPrice',
+        key: 'buyPrice',
+      },
+      {
         title: 'Have',
         dataIndex: 'have',
         key: 'have',
-        render:(have) => (have ? 'Yes' : 'No'),
+        render:(have) => (<Checkbox checked={have} />),
       },
       {
         title: 'Read',
         dataIndex: 'read',
         key: 'read',
-        render: read => (read ? 'Yes' : 'No'),
+        render: read => (<Checkbox checked={read} />),
       },
       {
         title: 'Tags',
@@ -243,11 +268,11 @@ class Bookstore extends Component {
         render: (text, record) => (
           <React.Fragment>
             <Button type="primary" onClick={() => this.handleHave(record._id, record.have)}>
-              {!record.have ? "have" : "Not have"} 
+              Change Have
             </Button>
             <Divider type="vertical" />
             <Button type="primary" onClick={() => this.handleRead(record._id, record.read)}>
-              {!record.read ? "read" : "Not read"}
+              Change Read
             </Button>
             <Divider type="vertical" />
             <Button type="danger" onClick={() => this.handleDelete(record._id)}>
@@ -265,7 +290,7 @@ class Bookstore extends Component {
         pageSize: 5,
       },
     };
-
+    
     return (
       <div className="bookstore_main-container">
         <Header/>
@@ -283,6 +308,8 @@ class Bookstore extends Component {
                 <h2>Add new book</h2>
                 <Input type="text" placeholder="book name" onChange={this.handleChangeName.bind(this)} value={name}/>
                 <Input type="text" placeholder="author" onChange={this.handleChangeAuthor.bind(this)} value={author}/>
+                <Input type="text" placeholder="normal price" onChange={this.handleChangeNormalPrice.bind(this)} value={normalPrice}/>
+                <Input type="text" placeholder="buy price" onChange={this.handleChangeBuyPrice.bind(this)} value={buyPrice}/>
                 <div className="checkbox-container">
                   <Checkbox onChange={this.handleChangeHave.bind(this)} checked={have}>Have</Checkbox>
                   <Checkbox onChange={this.handleChangeRead.bind(this)} checked={read}>Read</Checkbox>
@@ -296,7 +323,7 @@ class Bookstore extends Component {
                   <Checkbox onChange={this.handleChangeTags.bind(this, 'literature')} checked={literature}>文学</Checkbox>
                 </div>
 
-                <Button type="primary" onClick={() => this.handleSubmit(name, author, have, read)}>Submit</Button>
+                <Button type="primary" onClick={() => this.handleSubmit(name, author, have, read, normalPrice, buyPrice)}>Submit</Button>
               </div>
             </div>
           </Col>
@@ -316,7 +343,6 @@ class Bookstore extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state)
   return ({
     books: state.getBooks.books,
     haveHad: state.haveReadCount.have,
