@@ -3,6 +3,7 @@ export const bookstoreUrl = 'http://127.0.0.1:3000/bookstore';
 export const bookTagsUrl = 'http://127.0.0.1:3000/bookstore/tags';
 export const bookHaveUrl = 'http://127.0.0.1:3000/bookstore/have';
 export const bookReadUrl = 'http://127.0.0.1:3000/bookstore/read';
+export const shoppingCartUrl = 'http://127.0.0.1:3000/shoppingcart';
 
 export const xinzhiKey = '3joccrmphceagweh';
 export const xinzhiUid = 'U73D1E0F68';
