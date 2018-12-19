@@ -4,6 +4,7 @@ import getBookTags from './bookstore/getBookTags';
 import haveReadCount from './bookstore/haveReadCount';
 import indexReducer from './indexReducer';
 import shoppingcartReducer from './shoppingcartReducer';
+import getZhuishuReducer from './zhuishu/getZhuishu';
 
 const rootReducer = combineReducers({
     getBooks,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
     haveReadCount,
     indexReducer,
     shoppingcartReducer,
+    getZhuishuReducer,
 });
 
 export default rootReducer;

@@ -20,6 +20,9 @@ const Header = () => (
         <Menu.Item key="shoppingcart">
           <a href="/shoppingcart"><Icon type="shopping-cart" />Shoppingcart</a>
         </Menu.Item>
+        <Menu.Item key="zhuishu">
+          <a href="/zhuishu"><Icon type="appstore" />追书神器</a>
+        </Menu.Item>
 
       </Menu>
     </div>

@@ -11,6 +11,9 @@ import Index from './Components/pages/Index';
 import Todolist from './Components/pages/Todolist';
 import Bookstore from './Components/pages/Bookstore';
 import Shoppingcart from './Components/pages/Shoppingcart';
+import Zhuishu from './Components/pages/Zhuishu';
+import BookInfo from './Components/pages/BookInfo';
+import ChapterDetail from './Components/pages/ChapterDetail';
 import * as serviceWorker from './serviceWorker';
 import 'antd/dist/antd.css';
 
@@ -29,6 +32,9 @@ ReactDOM.render(
         <Route path="/todolist" exact component={Todolist} />
         <Route path="/bookstore" exact component={Bookstore} />
         <Route path="/shoppingcart" exact component={Shoppingcart}/>
+        <Route path="/zhuishu" exact component={Zhuishu}/>
+        <Route path="/zhuishu/:id" component={BookInfo}/>
+        <Route path="/chapter/:url" component={ChapterDetail}/>
       </Switch>
     </Provider>
   </Router>

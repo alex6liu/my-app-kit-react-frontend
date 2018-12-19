@@ -16,3 +16,7 @@ export const caiyunKey = 'TAkhjf8d1nlSlspN';
 
 export const hefengKey = 'b0f30333c4d0491f9b0bc25642620583';
 export const hefengYubao = 'https://free-api.heweather.net/s6/weather/forecast?';
+
+export const zhuishuSearch = 'https://api.zhuishushenqi.com/book/';
+export const zhuishuChapter = 'http://api.zhuishushenqi.com/mix-atoc/';
+export const zhuishuChapterDetail = 'http://chapter2.zhuishushenqi.com/chapter/';
