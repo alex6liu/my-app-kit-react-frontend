@@ -1,0 +1,71 @@
+.bookstore_main-container {
+    
+}
+
+.bookstore_table-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px 10px 50px 10px;
+}
+
+.book-tags-container {
+    margin-top: 200px;
+}
+
+.have-read-count {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 200px;
+
+    .ant-tag {
+        width: 100px;
+        margin: 5px;
+        font-size: 15px;
+        color: black;
+    }
+    .ant-checkbox-wrapper + .ant-checkbox-wrapper {
+        margin: 0;
+    }
+}
+
+.add-new-book {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+
+    input {
+        margin: 5px auto;
+    }
+
+    .checkbox-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        .ant-checkbox-wrapper {
+            display: block;
+        }
+        .ant-checkbox-wrapper + .ant-checkbox-wrapper {
+            margin: 0;
+        }
+    }
+
+    .genre-container {
+        margin: 10px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        .ant-checkbox-wrapper + .ant-checkbox-wrapper {
+            margin: 0;
+        }
+    }
+}
