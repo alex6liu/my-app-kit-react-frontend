@@ -11,6 +11,7 @@
 ## Todolist
 
 - [x] Connect to MongoDB Altas
+- [x] Connect to [Node.js backend](https://github.com/alex6liu/my-app-kit-backend)
 - [x] CRUD data
 - [x] Antd for style 
 
@@ -18,8 +19,11 @@
 ## Bookstore
 
 - [x] Connect to MongoDB Altas
+- [x] Connect to [Node.js backend](https://github.com/alex6liu/my-app-kit-backend)
 - [x] CRUD data
-- [x] Antd for style 
+- [x] Antd for style
+- [ ] Add functions(count cost)
+- [ ] optimize book categories 
 
 ---
 ## Shopping Cart
@@ -27,7 +31,7 @@
 - [x] Connect to MongoDB Altas
 - [] CRUD data
 - [x] Antd for style 
-- [ ]  
+- [ ] Add function(change price)
 
 ---
 ## Zhuishu
@@ -52,5 +56,15 @@
 
 ### Music
 
+- [] Connect api.
+- [] Styles.
+
+--- 
+## Zhihu
+- [] Connect api.
+- [] Styles.
+
+---
+## Github
 - [] Connect api.
 - [] Styles.
