@@ -29,7 +29,7 @@
 ## Shopping Cart
 
 - [x] Connect to MongoDB Altas
-- [] CRUD data
+- [ ] CRUD data
 - [x] Antd for style 
 - [ ] Add function(change price)
 
@@ -45,26 +45,26 @@
 
 ### Book
 
-- [] Connect api.
-- [] Styles.
+- [ ] Connect api.
+- [ ] Styles.
 
 ### Movie
 
-- [] Connect api.
-- [] Styles.
-- [] Top 250
+- [ ] Connect api.
+- [ ] Styles.
+- [ ] Top 250
 
 ### Music
 
-- [] Connect api.
-- [] Styles.
+- [ ] Connect api.
+- [ ] Styles.
 
 --- 
 ## Zhihu
-- [] Connect api.
-- [] Styles.
+- [ ] Connect api.
+- [ ] Styles.
 
 ---
 ## Github
-- [] Connect api.
-- [] Styles.
+- [ ] Connect api.
+- [ ] Styles.
