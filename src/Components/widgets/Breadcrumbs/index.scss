@@ -1,0 +1,28 @@
+.breadcrumbs-contianer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 18px;
+
+    span {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    span a {
+        text-decoration: none;
+        font: 18px/18px 'Catamaran', sans-serif ;
+        color: rgba(31,31,31,0.54)
+    }
+
+    span:last-of-type a {
+        font: 18px/18px 'Catamaran', sans-serif ;
+        color: rgb(31,31,31)
+    }
+
+    i {
+        opacity: 0.54;
+        line-height: 18px;
+    }
+}

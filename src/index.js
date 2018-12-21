@@ -14,6 +14,9 @@ import Shoppingcart from './Components/pages/Shoppingcart';
 import Zhuishu from './Components/pages/Zhuishu';
 import BookInfo from './Components/pages/BookInfo';
 import ChapterDetail from './Components/pages/ChapterDetail';
+import DoubanBook from './Components/pages/Douban/DoubanBook';
+import DoubanMusic from './Components/pages/Douban/DoubanMusic';
+import DoubanMovie from './Components/pages/Douban/DoubanMovie';
 import * as serviceWorker from './serviceWorker';
 import 'antd/dist/antd.css';
 
@@ -35,6 +38,9 @@ ReactDOM.render(
         <Route path="/zhuishu" exact component={Zhuishu}/>
         <Route path="/zhuishu/:id" component={BookInfo}/>
         <Route path="/chapter/:url" component={ChapterDetail}/>
+        <Route path="/douban-book" component={DoubanBook}/>
+        <Route path="/douban-music" component={DoubanMusic}/>
+        <Route path="/douban-movie" component={DoubanMovie}/>
       </Switch>
     </Provider>
   </Router>

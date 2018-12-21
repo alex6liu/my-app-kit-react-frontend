@@ -25,7 +25,7 @@ class BookInfo extends Component {
 
         const chaptersTable = chapters => {
             const chaptersTableArray = []
-            for(let i = 0; i<chapters.length;i++) {
+            for(let i = chapters.length - 1; i>=0;i--) {
                 const newLink = chapters[i].link.replace(/\//g, '%2F').replace('?', '%3F')
                 chaptersTableArray.push(<div><Link to={`/chapter/${newLink}`}>{chapters[i].title}</Link></div>);
 
@@ -55,7 +55,7 @@ class BookInfo extends Component {
 }
 
 const mapStateToProps = state => {
-    // console.log(state)
+    console.log(state)
     return ({
         bookinfo: state.getZhuishuReducer.bookinfo,
         chapters: state.getZhuishuReducer.chapters,
