@@ -19,6 +19,7 @@ import DoubanMusic from './Components/pages/Douban/DoubanMusic';
 import DoubanMovie from './Components/pages/Douban/DoubanMovie';
 import * as serviceWorker from './serviceWorker';
 import 'antd/dist/antd.css';
+import Routes from './routes';
 
 const store = createStore(
   rootReducer,
@@ -31,16 +32,16 @@ ReactDOM.render(
   <Router>
     <Provider store={store}>
       <Switch>
-        <Route path="/" exact component={Index} />
-        <Route path="/todolist" exact component={Todolist} />
-        <Route path="/bookstore" exact component={Bookstore} />
-        <Route path="/shoppingcart" exact component={Shoppingcart}/>
-        <Route path="/zhuishu" exact component={Zhuishu}/>
+        <Route path={Routes.HOME.path} exact component={Index} />
+        <Route path={Routes.TODOLIST.path} exact component={Todolist} />
+        <Route path={Routes.BOOKSTORE.path} exact component={Bookstore} />
+        <Route path={Routes.SHOPPINGCART.path} exact component={Shoppingcart}/>
+        <Route path={Routes.ZHUISHU.path} exact component={Zhuishu}/>
         <Route path="/zhuishu/:id" component={BookInfo}/>
         <Route path="/chapter/:url" component={ChapterDetail}/>
-        <Route path="/douban-book" component={DoubanBook}/>
-        <Route path="/douban-music" component={DoubanMusic}/>
-        <Route path="/douban-movie" component={DoubanMovie}/>
+        <Route path={Routes.DOUBAN_BOOK.path} component={DoubanBook}/>
+        <Route path={Routes.DOUBAN_MUSIC.path} component={DoubanMusic}/>
+        <Route path={Routes.DOUBAN_MOVIE.path} component={DoubanMovie}/>
       </Switch>
     </Provider>
   </Router>

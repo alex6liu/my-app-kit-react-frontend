@@ -25,7 +25,7 @@ export const zhuishuChapter = 'http://api.zhuishushenqi.com/mix-atoc/';
 export const zhuishuChapterDetail = 'http://chapter2.zhuishushenqi.com/chapter/';
 // 更多api介绍 https://juejin.im/entry/593a3fdf61ff4b006c737ca4
 
-
+// https://www.jianshu.com/p/d9701a81be8e
 // ?start=number&count=number
 export const doubanBook = 'https://api.douban.com/v2/book/';
 // get -> url + '/' + id

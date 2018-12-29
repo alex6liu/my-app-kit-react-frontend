@@ -5,6 +5,9 @@ import haveReadCount from './bookstore/haveReadCount';
 import indexReducer from './indexReducer';
 import shoppingcartReducer from './shoppingcartReducer';
 import getZhuishuReducer from './zhuishu/getZhuishu';
+import doubanBookReducer from './douban/doubanBook';
+import doubanMusicReducer from './douban/doubanMusic';
+import doubanMovieReducer from './douban/doubanMovie';
 
 const rootReducer = combineReducers({
     getBooks,
@@ -13,6 +16,9 @@ const rootReducer = combineReducers({
     indexReducer,
     shoppingcartReducer,
     getZhuishuReducer,
+    doubanBookReducer,
+    doubanMusicReducer,
+    doubanMovieReducer,
 });
 
 export default rootReducer;

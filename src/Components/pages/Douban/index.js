@@ -3,21 +3,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Header from '../../widgets/Header';
 import Breadcrumbs from '../../widgets/Breadcrumbs';
+import routes from '../../../routes';
+import DoubanBook from './DoubanBook';
+import DoubanMusic from './DoubanMusic';
+import DoubanMovie from './DoubanMovie';
 
-class DoubanWrapper extends Component {
-    render() {
-        return (
-            <div>
-                <Header />
-                <Breadcrumbs />
-            </div>
-        );
-    }
+const DoubanWrapper =  () => {
+
+    return (
+        <div className="douban-wrapper">
+            <Header />
+            <Breadcrumbs />
+        </div>
+    );
 }
 
-const mapStateToProps = state => {
-    console.log(state)
-    return ({});
-}
-
-export default connect(mapStateToProps)(DoubanWrapper);
+export default DoubanWrapper;
