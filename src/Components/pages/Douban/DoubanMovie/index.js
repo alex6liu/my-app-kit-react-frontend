@@ -3,7 +3,7 @@ import React, { Component } from 'react';import './index.scss';
 import { connect } from 'react-redux';
 import Header from '../../../widgets/Header';
 import Breadcrumbs from '../../../widgets/Breadcrumbs';
-import DoubanWrapper from '../index';
+import { Button, Icon, Input } from 'antd';
 
 class DoubanMovie extends Component {
     render() {
@@ -11,7 +11,10 @@ class DoubanMovie extends Component {
             <div>
                 <Header />
                 <Breadcrumbs />
-                movie
+                <div className="douban-movie__container">
+                    <Input placeholder="Basic usage" className="movie-search" />
+                    <Button type="primary" className="movie-search-button" onClick={() => this.handleMovieSearch.bind(this)}>搜索</Button>
+                </div>
             </div>
         )
     }
