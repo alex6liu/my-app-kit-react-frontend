@@ -11,6 +11,10 @@ export default {
         path: '/bookstore',
         name: 'Bookstore'
     },
+    BOOKCHART: {
+        path: '/bookchart',
+        name: 'Bookchart'
+    },
     SHOPPINGCART: {
         path: '/shoppingcart',
         name: 'Shoppingcart'

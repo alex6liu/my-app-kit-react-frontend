@@ -10,6 +10,7 @@ import rootReducer from './reducers/rootReducer';
 import Index from './Components/pages/Index';
 import Todolist from './Components/pages/Todolist';
 import Bookstore from './Components/pages/Bookstore';
+import Bookchart from './Components/pages/BookChart';
 import Shoppingcart from './Components/pages/Shoppingcart';
 import Zhuishu from './Components/pages/Zhuishu';
 import BookInfo from './Components/pages/BookInfo';
@@ -35,6 +36,7 @@ ReactDOM.render(
         <Route path={Routes.HOME.path} exact component={Index} />
         <Route path={Routes.TODOLIST.path} exact component={Todolist} />
         <Route path={Routes.BOOKSTORE.path} exact component={Bookstore} />
+        <Route path={Routes.BOOKCHART.path} exact component={Bookchart} />
         <Route path={Routes.SHOPPINGCART.path} exact component={Shoppingcart}/>
         <Route path={Routes.ZHUISHU.path} exact component={Zhuishu}/>
         <Route path="/zhuishu/:id" component={BookInfo}/>

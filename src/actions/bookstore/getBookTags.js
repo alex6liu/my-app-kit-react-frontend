@@ -35,20 +35,20 @@ export const getLiterture = json => ({
     }
 });
 
-export const getBookTags = () => dispatch => {
-    fetch(`${bookTagsUrl}/history`)
+export const getBookTags = () => async dispatch => {
+    await fetch(`${bookTagsUrl}/history`)
         .then(res => res.json())
         .then(myjson => dispatch(getHistory(myjson)))
-    fetch(`${bookTagsUrl}/eco`)
+    await fetch(`${bookTagsUrl}/eco`)
         .then(res => res.json())
         .then(myjson => dispatch(getEco(myjson)))
-    fetch(`${bookTagsUrl}/cs`)
+    await fetch(`${bookTagsUrl}/cs`)
         .then(res => res.json())
         .then(myjson => dispatch(getCs(myjson)))
-    fetch(`${bookTagsUrl}/novel`)
+    await fetch(`${bookTagsUrl}/novel`)
         .then(res => res.json())
         .then(myjson => dispatch(getNovel(myjson)))
-    fetch(`${bookTagsUrl}/literture`)
+    await fetch(`${bookTagsUrl}/literture`)
         .then(res => res.json())
         .then(myjson => dispatch(getLiterture(myjson)))
     

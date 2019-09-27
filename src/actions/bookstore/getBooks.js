@@ -9,8 +9,8 @@ export const receiveBooks = json => ({
     }
 });
 
-export const getBooks = () => (dispatch) => (
-    fetch(bookstoreUrl)
+export const getBooks = () => async (dispatch) => (
+    await fetch(bookstoreUrl)
         .then(res => res.json())
         .then(myjson => dispatch(receiveBooks(myjson)))
         .then(() => dispatch(haveReadCount()))

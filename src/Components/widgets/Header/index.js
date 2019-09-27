@@ -18,6 +18,9 @@ const Header = () => (
         <Menu.Item key="bookstore">
           <Link to="/bookstore"><Icon type="book" />Bookstore</Link>
         </Menu.Item>
+        <Menu.Item key="bookchart">
+          <Link to="/bookchart"><Icon type="book" />Bookchart</Link>
+        </Menu.Item>
         <Menu.Item key="shoppingcart">
           <Link to="/shoppingcart"><Icon type="shopping-cart" />Shoppingcart</Link>
         </Menu.Item>
